@@ -1,6 +1,9 @@
+![License](https://img.shields.io/github/license/ADORSYS-GIS/taler-obg)
+![Issues](https://img.shields.io/github/issues/ADORSYS-GIS/taler-obg)
+
 # taler-obg
 
-**taler-obg** is an open source extension of the OBG project. It extends OBG for use in the NGI Taler project, improving user experience, and adding new adaptors for European banks. With a focused scope banks PIS integration to support automatic top-ups in the Taler Wallet.
+**taler-obg** is an open source extension of the OBG project. It extends OBG for use in the NGI Taler project, improving user experience, and adding new adaptors for European banks. With a focused scope banks' PIS integration to support automatic top-ups in the Taler Wallet.
 
 ---
 
@@ -103,6 +106,11 @@ To keep the project transparent and well-managed, we document our organizational
 - **Retrospectives:**  
   Lessons learned and areas for improvement are captured in `docs/meetings/retrospectives.md`.
 
+### Project Management
+
+- **Issue Tracking & Project Board:**  
+  Our project issues and tasks are managed on GitHub. You can view and contribute to the project board here: [ADORSYS-GIS Project Board](https://github.com/orgs/ADORSYS-GIS/projects/22).
+  
 ---
 
 ## Getting Started
