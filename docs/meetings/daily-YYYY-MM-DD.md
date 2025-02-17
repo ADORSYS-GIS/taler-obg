@@ -7,7 +7,7 @@
 - [kouamschekina](https://github.com/kouamschekina)
 - [max402](https://github.com/max402)
 - [NdSaid](https://github.com/NdSaid)
-- [valsuh45](https://github.com/valsuh45)
+- [Valsuh45](https://github.com/Valsuh45)
 - [francis-pouatcha](https://github.com/francis-pouatcha)
 
 ## Yesterday’s Work
@@ -15,7 +15,7 @@
 - **[kouamschekina](https://github.com/kouamschekina):** Brief description of tasks completed.
 - **[max402](https://github.com/max402):** Brief description of tasks completed.
 - **[NdSaid](https://github.com/NdSaid):** Brief description of tasks completed.
-- **[valsuh45](https://github.com/valsuh45):** Brief description of tasks completed.
+- **[Valsuh45](https://github.com/Valsuh45):** Brief description of tasks completed.
 - **[francis-pouatcha](https://github.com/francis-pouatcha):** Brief description of tasks completed.
 
 ## Today’s Plan
@@ -23,7 +23,7 @@
 - **[kouamschekina](https://github.com/kouamschekina):** Brief description of planned tasks.
 - **[max402](https://github.com/max402):** Brief description of planned tasks.
 - **[NdSaid](https://github.com/NdSaid):** Brief description of planned tasks.
-- **[valsuh45](https://github.com/valsuh45):** Brief description of planned tasks.
+- **[Valsuh45](https://github.com/Valsuh45):** Brief description of planned tasks.
 - **[francis-pouatcha](https://github.com/francis-pouatcha):** Brief description of planned tasks.
 
 ## Blockers / Issues

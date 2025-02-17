@@ -11,7 +11,7 @@
 | Developer    | [kouamschekina](https://github.com/kouamschekina)   |                        |
 | Developer    | [max402](https://github.com/max402)   |                        |
 | Developer    | [NdSaid](https://github.com/NdSaid)   |                        |
-| Developer    | [valsuh45](https://github.com/valsuh45)   |                        |
+| Developer    | [Valsuh45](https://github.com/Valsuh45)   |                        |
 | Reviewer| [francis-pouatcha](https://github.com/francis-pouatcha)      |                        |
 | ...          | ...                               |                        |
 
@@ -39,7 +39,7 @@
 | [kouamschekina](https://github.com/kouamschekina) | 10                        |                       |
 | [max402](https://github.com/max402)                 | 4                        | part-time, Mo-Tu)|
 | [NdSaid](https://github.com/NdSaid)             | 10                         |  |
-| [valsuh45](https://github.com/valsuh45)           | 10                        |                       |
+| [Valsuh45](https://github.com/Valsuh45)           | 10                        |                       |
 | ...                | ...                                       |                         |
 
 ### Absence / Holiday Notes

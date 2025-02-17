@@ -9,7 +9,7 @@
 - [kouamschekina](https://github.com/kouamschekina)
 - [max402](https://github.com/max402)
 - [NdSaid](https://github.com/NdSaid)
-- [valsuh45](https://github.com/valsuh45)
+- [Valsuh45](https://github.com/Valsuh45)
 - [francis-pouatcha](https://github.com/francis-pouatcha)
 
 ---
