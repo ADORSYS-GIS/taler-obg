@@ -111,7 +111,7 @@ Retrieves the session status, including external status providers if necessary. 
 - `Service-Session-Password`: Password to encrypt Fintech data.
 - `X-Request-ID`: Unique ID identifying the request.
 
-### b. TPPBankingApiBankSearch
+### b. TPPBankSearchApi
 
 This API provides FinTech possibilities to perform search calls to the PSU. Below are the endpoints available:
 
@@ -149,4 +149,60 @@ At this entry point, the ConsentAuthorisationApi will use the xXsrfToken to retr
 
 **- Query Parameter:**
 
-- `xXsrfToken `:XSRF parameter used to retrieve a redirect session. This is generaly transported as a query parameter.
+- `xXsrfToken `: XSRF parameter used to retrieve a redirect session. This is generaly transported as a query parameter.
+
+#### ii. **POST v1/consent/{auth-id}/embedded**
+
+Update consent session with PSU auth data whereby requesting remaining challenges for the ongoing authorization process. Returns 202 if one should proceed to some other link. Link to follow is in 'Location' header.
+
+**- Path Parameter:**
+
+`{auth-id}` Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process.
+
+**- Query Parameter:**
+
+- `xXsrfToken `: XSRF parameter used to retrieve a redirect session. This is generaly transported as a query parameter.
+
+**- Request header**
+- `X-Request-ID`: Unique ID that identifies this request through common workflow. Shall be contained in HTTP Response as well.
+
+#### iii. **POST v1/consent/{auth-id}/deny**
+
+Closes this session and redirects the PSU back to the FinTechApi or close the application window. In any case, the session of the user will be closed and cookies will be deleted with the response to this request.
+
+**- Path Parameter:**
+
+`{auth-id}` Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process.
+
+**- Request header**
+- `X-Request-ID`: Unique ID that identifies this request through common workflow. Shall be contained in HTTP Response as well.
+
+#### iv. **GET v1/consent/{auth-id}/fromAspsp/{redirectState}/ok**
+
+Redirecting back from ASPSP to ConsentAuthorisationApi after a successful consent authorization. In any case, the corresponding redirect session of the user will be closed and cookies will be deleted with the response to this request.
+
+**- Path Parameter:**
+
+- `{auth-id}` Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process.
+- `{redirectState}` Code used to retrieve a redirect session. This is generaly transported as a path parameter due to some banks limitiations (ING ASPSP) instead of being transported as query parameter.
+
+**- Query Parameter**
+- `code`: Oauth2 code to exchange for token.
+
+#### v. **GET v1/consent/{auth-id}/fromAspsp/{redirectState}/nok**
+
+Redirecting back from ASPSP to TPP after a failed consent authorization. In any case, the corresponding redirect session of the user will be closed and cookies will be deleted with the response to this request.
+
+**- Path Parameter:**
+
+- `{auth-id}` Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process.
+- `{redirectState}` Code used to retrieve a redirect session. This is generaly transported as a path parameter due to some banks limitiations (ING ASPSP) instead of being transported as query parameter.
+
+---
+
+## 4. Detailed API Documentation
+
+For detailed explanation about our APIs you can check those files:
+- **[TppBankingApi](https://github.com/adorsys/open-banking-gateway/blob/develop/opba-banking-rest-api-ymls/src/main/resources/static/tpp_banking_api_ais.yml)**
+- **[TppBankingSearchApi](https://github.com/adorsys/open-banking-gateway/blob/develop/opba-banking-rest-api-ymls/src/main/resources/static/tpp_banking_api_bank_search.yml)**
+- **[ConsentAuthorisationApi](https://github.com/adorsys/open-banking-gateway/blob/develop/opba-consent-rest-api/src/main/resources/static/tpp_consent_api.yml)**
