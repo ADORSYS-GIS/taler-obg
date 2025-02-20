@@ -111,6 +111,19 @@ Retrieves the session status, including external status providers if necessary. 
 - `Service-Session-Password`: Password to encrypt Fintech data.
 - `X-Request-ID`: Unique ID identifying the request.
 
+#### iv. **POST v1/banking/payments/{auth-id}/confirm**
+
+provides FinTech with an Endpoint to confirm consent after redirection from the consent authorization API.
+
+**- Path Parameter:**
+
+- `{auth-id}`: Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process.
+
+**- Request Header:**
+
+- `Service-Session-Password`: Password to encrypt Fintech data.
+- `X-Request-ID`: Unique ID identifying the request.
+
 ### b. TPPBankSearchApi
 
 This API provides FinTech possibilities to perform search calls to the PSU. Below are the endpoints available:
@@ -206,3 +219,25 @@ For detailed explanation about our APIs you can check those files:
 - **[TppBankingApi](https://github.com/adorsys/open-banking-gateway/blob/develop/opba-banking-rest-api-ymls/src/main/resources/static/tpp_banking_api_ais.yml)**
 - **[TppBankingSearchApi](https://github.com/adorsys/open-banking-gateway/blob/develop/opba-banking-rest-api-ymls/src/main/resources/static/tpp_banking_api_bank_search.yml)**
 - **[ConsentAuthorisationApi](https://github.com/adorsys/open-banking-gateway/blob/develop/opba-consent-rest-api/src/main/resources/static/tpp_consent_api.yml)**
+- **[PaymentConfirmation](https://github.com/adorsys/open-banking-gateway/blob/develop/opba-banking-rest-api-ymls/src/main/resources/static/tpp_banking_api_token.yml)**
+
+---
+
+## 5. Authentication
+
+Here we are using what we call SCA Approaches to ensure that the PSU is really the one that want to initiate the payment in our scenario. **SCA** stands for Strong Customer Authentication. In general we have 3 SCA approaches:
+ - **Embedded approach**: When using the embedded approach, during the payment initiation transaction the PSU will his bank personal security credentials on the TPP/Fintech screen.
+ - **Redirect approach**: When using this approach, the PSU will be redirect on the bank's side (e.g Online banking app) to enter his credentials and confirm the payment
+ - **Decoupled approach**: Here the PSU will be sent to a separate secondary devince to authenticate during the payment initiation transaction
+
+Those authentication mecanisms are managed inside the Online Banking Gateway project using the **[ConsentAuthorisationApi](#ConsentAuthorisationApi)**
+
+---
+
+## 6. Architecture and workflow
+
+So in this section we will show a simplified architecture of the Open Banking Gateway and explain the workflow when it is come to Payment Initiation Service
+
+![OBG architecture](/chemin/access/image.jpg "Titre de l'image").
+
+
