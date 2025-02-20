@@ -118,3 +118,5 @@ The GNU Taler Ansible infrastructure utilizes the following technologies:
 - **Taler Exchange** – Financial transaction handling.
 
 This technology stack ensures **reliable, automated, and secure financial operations** within the GNU Taler ecosystem.
+
+Here is the link to the script -> https://git.taler.net/ansible-taler-exchange.git/
