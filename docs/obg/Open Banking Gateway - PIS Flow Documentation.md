@@ -2,7 +2,7 @@
 
 ## 1. Overview
 
-This document provides details on how the Payment Initiation Service is managed inside the OBG application. The PIS flow involves three main endpoints: TppbankingApi, tppbanksearch, and ConsentAuthorizationApi.
+This document provides details on how the Payment Initiation Service is managed inside the OBG application. The PIS flow involves three main endpoints: TppBankingApi, TppBankSearch, and ConsentAuthorisationApi.
 
 ---
 
@@ -238,6 +238,14 @@ Those authentication mecanisms are managed inside the Online Banking Gateway pro
 
 So in this section we will show a simplified architecture of the Open Banking Gateway and explain the workflow when it is come to Payment Initiation Service
 
-![OBG architecture](/chemin/access/image.jpg "Titre de l'image").
+![OBG architecture](img/fintech_OBG.png "Architecture").
 
+In this picture all the green components represent a fintech application use by the PSU to initiate the payment.
+In our scenario using our fintech-example when the PSU want to initiate a payment that is what is happening
+- S1: On the fintech app the PSU will search and select his bank with a call that will go though the fintech API and reach the TPPBankSearchApi on the TPP side (our OBG API)
+- 1a: The PSU will initiate a payment on the Fintech UI by providing all the informations we need to have (IBAN,instructed amount,etc...)
+- 1b: The Fintech APi will carry informations gave by the PSU via the FintechAPI to the TPPBankingApi and initiate a payment via the ```/v1/banking/pis/payments/{payment-product}``` endpoint
+- 1c: The OBG(on the TPP side) will go with the request to the ASPSP side
+- 2a,2b,2c:  The consent authorization process is triggered by redirecting the PSU from the TppBankingApi (2a) over the FinTechApi (2b) to the ```/consent/{auth-id}``` entry point of this ConsentAuthorisationApi (2c).
+- 4a,4b,4c: The final result of the authorization process is a PsuCosentSession that is returned by the token endpoint of the TppBankingAPi to the FinTechApi (4c). This handle will (PsuCosentSession) will be stored by the FinTechApi and added a PSU identifying information to each service request associated with this PSU.
 
