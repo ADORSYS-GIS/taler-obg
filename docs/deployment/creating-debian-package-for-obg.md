@@ -57,7 +57,7 @@ Package: obg
 Version: 1.0.0
 Architecture: amd64
 Maintainer: Your Name <your.email@example.com>
-Description: Open Banking Gateway Service for Payment Processing
+Description: Open Banking Gateway Service for Payment Initiation
 ```
 
 ## 3. Creating the Systemd Service File
