@@ -145,7 +145,7 @@ If user can be authenticated, user will be logged out.
 
 **- Request header:**
 
-  - `{X-Request-ID}` (string): Unique ID that identifies this request through common workflow. Must be contained in HTTP Response as well.
+  - `X-Request-ID` (string): Unique ID that identifies this request through common workflow. Must be contained in HTTP Response as well.
   - `X-XSRF-TOKEN` (string): XSRF parameter used to validate a SessionCookie or RedirectCookie.
 
 **- Response Body:**
@@ -238,7 +238,7 @@ Entry point when PSU is redirected back from ConsentAuthorisationApi to the FinT
 }
   ```
 
-#### iv. **GET v1/{auth-id}/fromPayment/{ok-or-notok}
+#### v. **GET v1/{auth-id}/fromPayment/{ok-or-notok}
 
 Entry point when PSU is redirected back from ConsentAuthorisationApi to the FinTechUI. All the informations are the same as above.
 
@@ -257,16 +257,16 @@ Entry point when PSU is redirected back from ConsentAuthorisationApi to the FinT
    - `X-XSRF-TOKEN` (string): XSRF parameter used to validate a SessionCookie or RedirectCookie.
    - `X-Request-ID` (string): Unique ID identifying the request.
 
-**- Response Header** (in case of a 202 response code)
-   - `X-Request-ID`: same as above
-   - `Set-Cookie`: same as above
-   - `X-XSRF-TOKEN`: same as above
+**- Response Header** (in case of a 200 response code)
+   - `X-Request-ID` (string): same as above
+   - `Set-Cookie` (string): same as above
+   - `X-XSRF-TOKEN` (string): same as above
      
 **- Response Header** (in case of a 401 response code)
-   - `X-Request-ID`: same as above.
-   - `Set-Cookie`: Delete all relevant cookies. Example: "RedirectSession=null; Path=/; Max-Age=0, Session=null; Path=/; Max-Age=0"
+   - `X-Request-ID` (string): same as above.
+   - `Set-Cookie` (string): Delete all relevant cookies. Example: "RedirectSession=null; Path=/; Max-Age=0, Session=null; Path=/; Max-Age=0"
 
-**- Response body** (in case of a 202 response code)
+**- Response body** (in case of a 200 response code)
     ```
     {
   "bankDescriptor": [
@@ -299,7 +299,7 @@ Entry point when PSU is redirected back from ConsentAuthorisationApi to the FinT
   "total": 0
 }
     ```
-**- Response body** (in case of a 401 response code) Access credentials absent or invalid. This happens when
+**- Response body:** (in case of a 401 response code) Access credentials absent or invalid. This happens when
       - Provided credential for login not matching.
       - Endpoint expect a session cookie but none is present.
       - Session cookie is present but associated stateString does not match.  
@@ -319,7 +319,8 @@ Entry point when PSU is redirected back from ConsentAuthorisationApi to the FinT
       }
     ```
 
-#### i. GET /v1/search/bankSearch 
+
+#### ii. GET /v1/search/bankSearch 
 
 Request the profile of the bank identified with id (bankProfileId).
 
@@ -330,105 +331,155 @@ Request the profile of the bank identified with id (bankProfileId).
 **- Query parameter** 
     - `bankProfileId`: Identifier of the bank to be loaded.
     
-**- Response Header**
-    - `X-Request-ID`: 
-Continue here
-### b. TPPBankSearchApi
+**- Response Header** (in case of a 200 or a 404 response code)
+    - `X-Request-ID`: same as above
+    - `Set-Cookie`: same as above
+    - `X-XSRF-TOKEN`: same as above
+    
+**- Response Header:*** (in case of a 401 response code )
+  - `X-Request-ID`: same as above
+  - `Set-Cookie`: Delete all relevant cookies. Example: "RedirectSession=null; Path=/; Max-Age=0, Session=null; Path=/; Max-Age=0"
 
-This API provides FinTech possibilities to perform search calls to the PSU. Below are the endpoints available:
+**- Response body** (in case of a 200 response code )
+```
+   {
+  "bankProfile": {
+    "bankId": "string",
+    "bankName": "string",
+    "name": "string",
+    "bic": "string",
+    "uuid": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "services": [
+      "string"
+    ],
+    "externalId": "string",
+    "externalInterfaces": "string",
+    "protocolType": "string",
+    "isSandbox": true
+  }
+}
+ ```
 
-#### i. **GET v1/banking/search/bank-search**
+**- Response Body** (in case of a 401 response code): same as in the previous endpoint
 
-Issues an incremental bank search request to the TppBankSearchApi.
+**- Response Body** (in case of a 404 response code): 
+   ```
+[
+  {
+    "category": "ERROR",
+    "code": "string",
+    "path": "string",
+    "text": "string"
+  }
+]
+   ```
 
-**- Request Header:**
+### c. FintechRetrieveAllSinglePayments
 
-- `X-Request-ID `: Unique ID that identifies this request through common workflow. Shall be contained in HTTP Response as well.
-- `onlyActive`: Controls visibility of inactive banks in the response (false - both active and inactive, true - only active)
+#### i. GET v1/pis/banks/{bank-id}/accounts/{account-id}/payments/single 
 
-#### ii. **GET v1/banking/search/bank-profile**
+This method is used to get payment status.
 
-Issues an incremental bank search request to the TppBankSearchApi.
+**- Path parameter:**
+   - `{bank-id}`: Identifier of the bank.
+   - `{account-id}`: account identifier of the account from where the payment status will be check.
 
-**- Request Header:**
+**- Request header:**
+   - `X-Request-ID` (string): same as above.
+   - `X-XSRF-TOKEN` (string): XSRF parameter used to validate a SessionCookie or RedirectCookie.
 
-- `X-Request-ID `: Unique ID that identifies this request through common workflow. Shall be contained in HTTP Response as well.
-- `bankProfileId`: Identifier of the bank profile to be loaded.
+**- Response body:**(in case of a 200 response code) 	List of all payments done 
+```
+[
+  {
+    "endToEndIdentification": "string",
+    "debtorAccount": {
+      "iban": "FR7612345987650123456789014",
+      "bban": "BARC12345612345678",
+      "pan": "5409050000000000",
+      "maskedPan": "123456xxxxxx1234",
+      "msisdn": "+49 170 1234567",
+      "currency": "EUR"
+    },
+    "instructedAmount": {
+      "currency": "EUR",
+      "amount": "123"
+    },
+    "creditorAccount": {
+      "iban": "FR7612345987650123456789014",
+      "bban": "BARC12345612345678",
+      "pan": "5409050000000000",
+      "maskedPan": "123456xxxxxx1234",
+      "msisdn": "+49 170 1234567",
+      "currency": "EUR"
+    },
+    "creditorAgent": "AAAADEBBXXX",
+    "creditorName": "Creditor Name",
+    "creditorAddress": {
+      "street": "rue blue",
+      "buildingnNumber": "89",
+      "city": "Paris",
+      "postalCode": "75000",
+      "country": "FR"
+    },
+    "remittanceInformationUnstructured": "Ref Number Merchant",
+    "transactionStatus": "string",
+    "initiationDate": "2025-03-24"
+  }
+]	
 
-### c. ConsentAuthorisationApi
+```
 
-Interface used by the PsuUserAgent to present consent authorization services to the PSU.The consent authorization process is triggered by redirecting the PSU from the TppBankingApi over the FinTechApi (On the fintech side) to the /consent/{auth-id} entry point of this ConsentAuthorisationApi. The decision on whether the authorization process is embedded or redirected is taken by this ConsentAuthorisationApi.
+**- Response header:** (in case of a 401 response) same as above. 
+**- Response Body:** (in case of a 401 response) same as above.
 
-#### i. **GET v1/consent/{auth-id}**
+### d. FintechSinglePaymentInitiation
 
-This is the entry point for processing a consent redirected by the TppBankingApi to this ConsentAuthorisationApi.
+#### i. POST v1/pis/banks/{bank-id}/accounts/{account-id}/payments/single 
 
-At this entry point, the ConsentAuthorisationApi will use the xXsrfToken to retrieve the RedirectSession from the TppServer. An analysis of the RedirectSession will help decide if the ConsentAuthorisationApi will proceed with an embedded approach or a redirect approach .
+This method is used to initiate a payment at the Fintech Server.
 
-**- Path Parameter:**
+**- Query parameter:**
+   - `{bank-id}`: same as above.
+   - `{account-id}`: identifier of the account where the payment will be initiate from
 
-`{auth-id}` Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process.
+**- Request header:**
+   - `X-Request-ID ` (string): same as above
+   - `X-XSRF-TOKEN ` (string): same as above
+   - `X-Psu-Authentication-Required` (boolean): If false, login form to OPBA will not be displayed as there might be nothing to share for payments, so that authentication is not necessary. If absent or true - login form for payments will be displayed.
+   - `Fintech-Redirect-URL-OK ` (string): Example https://example.com/myservice?auth-id=sf3x;authResult=success
+   - `Fintech-Redirect-URL-NOK` (string): Example https://example.com/myservice?auth-id=sf3x;authResult=failure
+   - `Fintech-Decoupled-Preferred` (boolean): If it equals "true", the fintech prefers a decoupled SCA approach.
+   - `Fintech-Brand-Logging-Information` (string): URI for the Endpoint to which the status of the consent should be sent
 
-**- Query Parameter:**
+**- Request body:**
 
-- `xXsrfToken `: XSRF parameter used to retrieve a redirect session. This is generaly transported as a query parameter.
+```
+{
+  "name": "string",
+  "creditorIban": "string",
+  "debitorIban": "string",
+  "amount": "string",
+  "purpose": "string",
+  "endToEndIdentification": "string",
+  "instantPayment": true
+}
+```
 
-#### ii. **POST v1/consent/{auth-id}/embedded**
+**- Response header:** (in case of a response 202 ) it will redirect the UserAgent to the ConsentAuthorisationApi.
+   -`Location`  (string): This is the 202 Location Header. It contains a redirect link for the /auth endpoint of the ConsentAuthorisationApi. This link must contain a redirectCode as a query parameter. Example: http://localhost:8083/consent/auth?redirectCode=ejxs.wersdzxxc23r.asdf
+   - `X-Request-ID`
+   - `X-XRSF-TOKEN`
+   - `Set-Cookie`: set before redirecting PSU. Example: "RedirectSession=ejxs.wersdzxxc23r.asdf; Path=/"
 
-Update consent session with PSU auth data whereby requesting remaining challenges for the ongoing authorization process. Returns 202 if one should proceed to some other link. Link to follow is in 'Location' header.
+**- Response header** (in case of a 401 response)
 
-**- Path Parameter:**
-
-`{auth-id}` Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process.
-
-**- Query Parameter:**
-
-- `xXsrfToken `: XSRF parameter used to retrieve a redirect session. This is generaly transported as a query parameter.
-
-**- Request header**
-- `X-Request-ID`: Unique ID that identifies this request through common workflow. Shall be contained in HTTP Response as well.
-
-#### iii. **POST v1/consent/{auth-id}/deny**
-
-Closes this session and redirects the PSU back to the FinTechApi or close the application window. In any case, the session of the user will be closed and cookies will be deleted with the response to this request.
-
-**- Path Parameter:**
-
-`{auth-id}` Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process.
-
-**- Request header**
-- `X-Request-ID`: Unique ID that identifies this request through common workflow. Shall be contained in HTTP Response as well.
-
-#### iv. **GET v1/consent/{auth-id}/fromAspsp/{redirectState}/ok**
-
-Redirecting back from ASPSP to ConsentAuthorisationApi after a successful consent authorization. In any case, the corresponding redirect session of the user will be closed and cookies will be deleted with the response to this request.
-
-**- Path Parameter:**
-
-- `{auth-id}` Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process.
-- `{redirectState}` Code used to retrieve a redirect session. This is generaly transported as a path parameter due to some banks limitiations (ING ASPSP) instead of being transported as query parameter.
-
-**- Query Parameter**
-- `code`: Oauth2 code to exchange for token.
-
-#### v. **GET v1/consent/{auth-id}/fromAspsp/{redirectState}/nok**
-
-Redirecting back from ASPSP to TPP after a failed consent authorization. In any case, the corresponding redirect session of the user will be closed and cookies will be deleted with the response to this request.
-
-**- Path Parameter:**
-
-- `{auth-id}` Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process.
-- `{redirectState}` Code used to retrieve a redirect session. This is generaly transported as a path parameter due to some banks limitiations (ING ASPSP) instead of being transported as query parameter.
-
----
 
 ## 4. Detailed API Documentation
 
 For detailed explanation about our APIs you can check those files:
-- **[TppBankingApi](https://github.com/adorsys/open-banking-gateway/blob/develop/opba-banking-rest-api-ymls/src/main/resources/static/tpp_banking_api_ais.yml)**
-- **[TppBankingSearchApi](https://github.com/adorsys/open-banking-gateway/blob/develop/opba-banking-rest-api-ymls/src/main/resources/static/tpp_banking_api_bank_search.yml)**
-- **[ConsentAuthorisationApi](https://github.com/adorsys/open-banking-gateway/blob/develop/opba-consent-rest-api/src/main/resources/static/tpp_consent_api.yml)**
-- **[PaymentConfirmation](https://github.com/adorsys/open-banking-gateway/blob/develop/opba-banking-rest-api-ymls/src/main/resources/static/tpp_banking_api_token.yml)**
+- **[FintechAPI]([https://github.com/adorsys/open-banking-gateway/blob/develop/opba-banking-rest-api-ymls/src/main/resources/static/tpp_banking_api_ais.yml](https://github.com/adorsys/open-banking-gateway/blob/develop/fintech-examples/fintech-api/src/main/resources/static/fintech_api.yml))**
+- **[CookieManagement]([https://github.com/adorsys/open-banking-gateway/blob/develop/opba-banking-rest-api-ymls/src/main/resources/static/tpp_banking_api_bank_search.yml](https://github.com/adorsys/open-banking-gateway/blob/develop/fintech-examples/CookieManagement.md))**
 
 ---
 
