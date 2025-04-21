@@ -1,7 +1,7 @@
 # Sprint Review & Retrospective
 
 **Sprint:** 1  
-**Period:** 2025-04-07 to 2025-04-21`  
+**Period:** 2025-04-21 to 2025-04-05`  
 **Date of Meeting:** 2025-04-21
 
 ## Attendees
