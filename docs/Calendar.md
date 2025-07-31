@@ -77,12 +77,5 @@ You can mark cells with:
 
 </details>
 
----
 
-Would you like:
 
-* A downloadable **Excel** or **CSV** file of this?
-* This converted into a **Confluence table**?
-* Or editable **Google Sheets** format?
-
-Let me know!
