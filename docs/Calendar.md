@@ -21,7 +21,7 @@ You can mark cells with:
 | Maksym    |   :x:     |    :x:    |     :x:   |   :x:     |   :x:     |  :x:      |   :x:     | :x:      |    :x:    |    :x:    |        |        |        |        |        |        |        |        |        |        |
 | Schekina  |        |        |        |        |        |        |        |        |        |        |        |        |        |        |        |        |        |        |        |        |
 | Saiid     |        |       |     |       |        |        |        | :x:       |   :x:     |      :x:  |   :x:     |    :x:    |        |        |        |        |        |        |        |      
-| Valentine |        |  :x:      |    :x:    |    :x:    |  :x:      |        |        |        |        |        |        |        |        |        |        |        |        |        |        |        |
+| Valentine |        |  :x:      |    :x:    |    :x:    |  :x:      |        |        |        |        |        |        |        |        |        |        |        |         |  :x:   |   :x:  |   :x:  |
 
 </details>
 
